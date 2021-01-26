@@ -254,7 +254,7 @@ orxBOOL orxFASTCALL orxMouse_Android_IsButtonPressed(orxMOUSE_BUTTON _eButton)
   else
   {
     /* Not available */
-    orxDEBUG_PRINT(orxDEBUG_LEVEL_MOUSE, "<%s> is not available on this platform!", orxMouse_GetButtonName(_eButton));
+    // orxDEBUG_PRINT(orxDEBUG_LEVEL_MOUSE, "<%s> is not available on this platform!", orxMouse_GetButtonName(_eButton));
   }
 
   /* Done! */
