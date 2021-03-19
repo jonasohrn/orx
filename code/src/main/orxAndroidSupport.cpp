@@ -1,6 +1,6 @@
 /* Orx - Portable Game Engine
  *
- * Copyright (c) 2008-2020 Orx-Project
+ * Copyright (c) 2008-2021 Orx-Project
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -718,15 +718,15 @@ extern "C" orxSTATUS orxAndroid_JNI_GetInputDevice(orxU32 _u32DeviceId, orxANDRO
     deviceNameString = (jstring)env->CallObjectMethod(deviceObject, mid);
     deviceName = env->GetStringUTFChars(deviceNameString, NULL);
     strncpy(pstJoystickInfo->descriptor, deviceName, sizeof(pstJoystickInfo->descriptor) - 1);
-    pstJoystickInfo->descriptor[sizeof(pstJoystickInfo->descriptor) - 1] = '\0';
+    pstJoystickInfo->descriptor[sizeof(pstJoystickInfo->descriptor) - 1] = orxCHAR_NULL;
     env->ReleaseStringUTFChars(deviceNameString, deviceName);
     env->DeleteLocalRef(deviceNameString);
 
     mid = env->GetMethodID(inputDeviceClass, "getName", "()Ljava/lang/String;");
     deviceNameString = (jstring)env->CallObjectMethod(deviceObject, mid);
     deviceName = env->GetStringUTFChars(deviceNameString, NULL);
-    strncpy(pstJoystickInfo->name, deviceName, sizeof(pstJoystickInfo->name));
-    pstJoystickInfo->name[sizeof(pstJoystickInfo->name) - 1] = '\0';
+    strncpy(pstJoystickInfo->name, deviceName, sizeof(pstJoystickInfo->name) - 1);
+    pstJoystickInfo->name[sizeof(pstJoystickInfo->name) - 1] = orxCHAR_NULL;
     env->ReleaseStringUTFChars(deviceNameString, deviceName);
     env->DeleteLocalRef(deviceNameString);
 
@@ -858,6 +858,7 @@ extern "C" void orxAndroid_PumpEvents()
           orxEVENT_SEND(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_TOUCH_BEGIN, orxNULL, orxNULL, &stPayload);
           break;
         case 1: // MotionEvent.ACTION_UP
+        case 3: // MotionEvent.ACTION_CANCEL
         case 6: // MotionEvent.ACTION_POINTER_UP
           orxEVENT_SEND(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_TOUCH_END, orxNULL, orxNULL, &stPayload);
           break;
